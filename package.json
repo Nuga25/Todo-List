@@ -1,6 +1,7 @@
 {
   "name": "todo-list",
   "version": "1.0.0",
+  "type": "module",
   "description": "A todo list web application",
   "main": "index.js",
   "scripts": {
