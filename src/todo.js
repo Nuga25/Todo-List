@@ -6,13 +6,13 @@ import {
 } from "./project.js";
 
 //function to create todo
-function createTodoItem(title, description, duedate, priority) {
-  return { title, description, duedate, priority };
+function createTodoItem(title, description, dueDate, priority) {
+  return { title, description, dueDate, priority };
 }
 
 //function to add todo to a project
-function addTodoToProject(title, description, duedate, priority, projectName) {
-  const task = createTodoItem(title, description, duedate, priority);
+function addTodoToProject(title, description, dueDate, priority, projectName) {
+  const task = createTodoItem(title, description, dueDate, priority);
 
   const project = arrOfProjects.find((proj) => proj.name === projectName);
   if (project) {
@@ -28,7 +28,7 @@ function addTodoToProject(title, description, duedate, priority, projectName) {
 function editTodo(
   newTitle,
   newDescription,
-  newDuedate,
+  newDueDate,
   newPriority,
   todoTitle,
   projectName
@@ -38,7 +38,7 @@ function editTodo(
 
   newTodo.title = newTitle;
   newTodo.description = newDescription;
-  newTodo.duedate = newDuedate;
+  newTodo.dueDate = newDueDate;
   newTodo.priority = newPriority;
 
   return newTodo;
@@ -54,7 +54,7 @@ function deleteTodoFromProject(title, projectName) {
   }
 }
 
-addProject("PROJECT 1");
+addProject("Default PROJECT 1");
 addTodoToProject(
   "make dinner",
   "rice flour for four",
@@ -92,9 +92,9 @@ addTodoToProject(
   "high",
   "PROJECT 2"
 );
-deleteProject("PROJECT 1");
+//deleteProject("PROJECT 1");
 
-deleteTodoFromProject("make dinner", "PROJECT 2");
+//deleteTodoFromProject("make dinner", "PROJECT 2");
 
 editTodo(
   "new title",
@@ -105,12 +105,14 @@ editTodo(
   "PROJECT 2"
 );
 
-editProjectName("PROJECT 2", "Arghhhhhh!!!!");
+editProjectName("PROJECT 2", "Default Project 2");
 
 //Log all projects and their tasks
 arrOfProjects.forEach((project) => {
   console.log(`Project: ${project.name}`);
   project.getTasks().forEach((task) => {
-    console.log(`- Task: ${task.title}, Due: ${task.duedate}`);
+    console.log(`- Task: ${task.title}, Due: ${task.dueDate}`);
   });
 });
+
+export { addTodoToProject };

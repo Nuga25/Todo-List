@@ -3,7 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo List</title>
+    <title>PlanIt</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>PlanIt</h1>
+    </header>
+    <main>
+      <section class="sidebar">
+        <div class="sidebar-box1">
+          <h2>OVERVIEW</h2>
+          <ul>
+            <li>
+              <div class="sidebar-menus">
+                <span>All Tasks</span>
+              </div>
+            </li>
+            <li>
+              <div class="sidebar-menus">
+                <span>Due Today</span>
+              </div>
+            </li>
+            <li>
+              <div class="sidebar-menus">
+                <span>Next 7 Days</span>
+              </div>
+            </li>
+            <li>
+              <div class="sidebar-menus">
+                <span>High Priority</span>
+              </div>
+            </li>
+            <li>
+              <div class="sidebar-menus">
+                <span>Medium Priority</span>
+              </div>
+            </li>
+            <li>
+              <div class="sidebar-menus">
+                <span>Low Priority</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar-box2">
+          <h2>PROJECTS</h2>
+          <div id="projectDiv"></div>
+          <button class="addProjectButton">Add New Project</button>
+        </div>
+      </section>
+      <section id="content"></section>
+    </main>
+  </body>
 </html>
