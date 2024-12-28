@@ -60,14 +60,14 @@ addTodoToProject(
   "rice flour for four",
   "today",
   "medium",
-  "PROJECT 1"
+  "Default PROJECT 1"
 );
 addTodoToProject(
   "make bed",
   "before you lay down",
   "today",
   "high",
-  "PROJECT 1"
+  "Default PROJECT 1"
 );
 
 addProject("PROJECT 2");

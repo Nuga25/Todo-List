@@ -53,6 +53,35 @@
         </div>
       </section>
       <section id="content"></section>
+     
+      <dialog id="dialog">
+        <span class="close-dialog">&#10005</span>
+        <form method="dialog" id="form">
+          <div>
+            <label for="task-title">Title</label>
+            <input type="text" id="task-title" autofocus required placeholder="What do you have to do?"/>
+          </div>
+          <div>
+            <label for="task-due-date">Due Date</label>
+            <input type="date" id="task-due-date" value=""/>
+          </div>
+          <div>
+            <label for="task-priority">Priority</label>
+            <select name="priority" id="task-priority">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div>
+            <label for="task-description">Description(optional)</label>
+            <textarea name="taskDescription" id="task-description"  cols="30" rows="6" placeholder="Describe the task" value="no description set"></textarea>
+          </div>
+          <div class="submit-btn-container">
+            <button type="submit" id="submit-task-btn">Add Task</button>
+          </div>
+        </form>
+      </dialog>
     </main>
   </body>
 </html>

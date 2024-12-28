@@ -2,7 +2,7 @@ import { addProject, arrOfProjects } from "./project.js";
 import { addTodoToProject } from "./todo.js";
 
 function screenController() {
-  //function to print available projects in array to the screen
+  //function to print created projects in array to the screen
   const printAvailableProject = () => {
     const projectContainer = document.querySelector("#projectDiv");
     projectContainer.textContent = "";
@@ -53,7 +53,7 @@ function screenController() {
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("taskContainer");
 
-    //render each task of clicked project
+    //initial render of tasks
     project.getTasks().forEach((task) => {
       const taskDiv = document.createElement("div");
       taskDiv.classList.add("task");
@@ -68,7 +68,7 @@ function screenController() {
     addTaskButton.textContent = "Add New Task";
 
     addTaskButton.addEventListener("click", () => {
-      addTask(project);
+      addTask(project, taskContainer);
     });
 
     contentDiv.appendChild(projectTitle);
@@ -77,22 +77,41 @@ function screenController() {
   };
 
   //function to add a new task to a project
-  const addTask = (project) => {
-    const taskTitle = prompt("Enter task title:");
-    const taskDescription = prompt("Enter task description:");
-    const taskDueDate = prompt("Enter due date:");
-    const taskPriority = prompt("Enter priority:");
+  const addTask = (project, taskContainer) => {
+    const dialog = document.querySelector("#dialog");
+    dialog.showModal();
 
-    addTodoToProject(
-      taskTitle,
-      taskDescription,
-      taskDueDate,
-      taskPriority,
-      project.name
-    );
+    const closeDialogButton = document.querySelector(".close-dialog");
+    closeDialogButton.addEventListener("click", () => {
+      dialog.close();
+    });
 
-    // Refresh the task list
-    openProject(project);
+    const submitTaskButton = document.querySelector("#submit-task-btn");
+    submitTaskButton.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const taskTitle = document.querySelector("#task-title").value;
+      const taskDescription = document.querySelector("#task-description").value;
+      const taskDueDate = document.querySelector("#task-due-date").value;
+      const taskPriority = document.querySelector("#task-priority").value;
+
+      addTodoToProject(
+        taskTitle,
+        taskDescription,
+        taskDueDate,
+        taskPriority,
+        project.name
+      );
+
+      dialog.close();
+
+      // update task container with new task
+      const taskDiv = document.createElement("div");
+      taskDiv.classList.add("task");
+      taskDiv.textContent = `${taskTitle} - ${taskDueDate}`;
+
+      taskContainer.appendChild(taskDiv);
+    });
   };
 
   return { printAvailableProject, addProjectButton };
