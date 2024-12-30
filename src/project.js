@@ -1,6 +1,7 @@
 //function to create new projects
 function createProject(name) {
   const tasks = [];
+  const completedTasks = [];
 
   const addTask = (task) => {
     tasks.push(task);
@@ -11,15 +12,31 @@ function createProject(name) {
     tasks.splice(index, 1);
   };
 
+  const markTaskAsComplete = (taskName) => {
+    const taskIndex = tasks.findIndex((task) => task.title === taskName);
+    if (taskIndex > -1) {
+      const [completedTask] = tasks.splice(taskIndex, 1);
+      completedTasks.push({ ...completedTask });
+    } else {
+      console.log(`Task "${taskName}" not found.`);
+    }
+  };
+
   const getTasks = () => {
     return [...tasks];
+  };
+
+  const getCompletedTasks = () => {
+    return [...completedTasks];
   };
 
   return {
     name,
     addTask,
     removeTask,
+    markTaskAsComplete,
     getTasks,
+    getCompletedTasks,
   };
 }
 

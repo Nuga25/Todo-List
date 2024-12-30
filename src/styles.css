@@ -121,3 +121,60 @@ textarea {
   font-size: 18px;
   cursor: pointer;
 }
+
+/* task container styling */
+.taskContainerForEach {
+  display: flex;
+  flex-direction: column;
+  background-color: #82cdf0;
+  padding: 10px;
+  margin: 5px;
+}
+
+.taskContainerBox1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskDivBox1_a {
+  width: 90%;
+  display: flex;
+  gap: 5px;
+}
+
+.taskDivBox1_b {
+  width: 10%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.svg-icons {
+  width: 20px;
+  margin: 5px;
+}
+
+.svg-icons-expand {
+  width: 25px;
+  margin: 5px;
+}
+
+.clearCompletedTasksBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #fff;
+  float: right;
+  width: 250px;
+  height: 40px;
+  margin: 10px;
+  background-color: #1084b9;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.deleteCompletedIcon {
+  width: 20px;
+  padding-left: 5px;
+}

@@ -1,5 +1,8 @@
 import { addProject, arrOfProjects } from "./project.js";
 import { addTodoToProject } from "./todo.js";
+import editIconImg from "./assets/icons/file-edit-outline.svg";
+import deleteIconImg from "./assets/icons/trash-can-outline.svg";
+import expandIconImg from "./assets/icons/chevron-down.svg";
 
 function screenController() {
   //function to print created projects in array to the screen
@@ -47,7 +50,7 @@ function screenController() {
     const contentDiv = document.querySelector("#content");
     contentDiv.textContent = "";
 
-    const projectTitle = document.createElement("div");
+    const projectTitle = document.createElement("h2");
     projectTitle.textContent = project.name;
 
     const taskContainer = document.createElement("div");
@@ -56,9 +59,55 @@ function screenController() {
     //initial render of tasks
     project.getTasks().forEach((task) => {
       const taskDiv = document.createElement("div");
-      taskDiv.classList.add("task");
-      taskDiv.textContent = `${task.title} - ${task.dueDate}`;
+      taskDiv.classList.add("taskContainerForEach");
+      const taskDivBox1 = document.createElement("div");
+      taskDivBox1.classList.add("taskContainerBox1");
+      const taskDivBox2 = document.createElement("div");
+      taskDivBox2.classList.add("taskContainerBox2");
+      const taskDivBox3 = document.createElement("div");
+      taskDivBox3.classList.add("taskContainerBox3");
 
+      const taskDivBox1_a = document.createElement("div"); //for task title and checkbox
+      taskDivBox1_a.classList.add("taskDivBox1_a");
+      const taskDivBox1_b = document.createElement("div"); //for edit, delete and expand icon
+      taskDivBox1_b.classList.add("taskDivBox1_b");
+
+      const checkBox = document.createElement("input");
+      checkBox.type = "checkbox";
+      taskDivBox1_a.appendChild(checkBox);
+
+      const taskTitle = document.createElement("h4");
+      taskTitle.textContent = `${task.title}`;
+      taskDivBox1_a.appendChild(taskTitle);
+
+      //edit, delete and expand icons
+      const editIcon = document.createElement("img");
+      editIcon.classList.add("svg-icons");
+      editIcon.src = editIconImg;
+      taskDivBox1_b.appendChild(editIcon);
+      const deleteIcon = document.createElement("img");
+      deleteIcon.classList.add("svg-icons");
+      deleteIcon.src = deleteIconImg;
+      taskDivBox1_b.appendChild(deleteIcon);
+      const expandIcon = document.createElement("img");
+      expandIcon.classList.add("svg-icons-expand");
+      expandIcon.src = expandIconImg;
+      taskDivBox1_b.appendChild(expandIcon);
+
+      taskDivBox1.appendChild(taskDivBox1_a);
+      taskDivBox1.appendChild(taskDivBox1_b);
+
+      const dueDate = document.createElement("p");
+      dueDate.textContent = `${task.dueDate}`;
+      taskDivBox2.appendChild(dueDate);
+
+      const taskDescription = document.createElement("p");
+      taskDescription.textContent = `${task.description}`;
+      taskDivBox3.appendChild(taskDescription);
+
+      taskDiv.appendChild(taskDivBox1);
+      taskDiv.appendChild(taskDivBox2);
+      taskDiv.appendChild(taskDivBox3);
       taskContainer.appendChild(taskDiv);
     });
 
@@ -71,9 +120,21 @@ function screenController() {
       addTask(project, taskContainer);
     });
 
+    //clear completed task button
+    const bottomDiv = document.createElement("div");
+    bottomDiv.classList.add("clearCompletedTasksBox");
+    const clearCompletedTaskButton = document.createElement("p");
+    clearCompletedTaskButton.textContent = "clear completed tasks";
+    bottomDiv.appendChild(clearCompletedTaskButton);
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = deleteIconImg;
+    deleteIcon.classList.add("deleteCompletedIcon");
+    bottomDiv.appendChild(deleteIcon);
+
     contentDiv.appendChild(projectTitle);
-    contentDiv.appendChild(taskContainer);
     contentDiv.appendChild(addTaskButton);
+    contentDiv.appendChild(taskContainer);
+    contentDiv.appendChild(bottomDiv);
   };
 
   //function to add a new task to a project
@@ -90,16 +151,18 @@ function screenController() {
     submitTaskButton.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const taskTitle = document.querySelector("#task-title").value;
-      const taskDescription = document.querySelector("#task-description").value;
-      const taskDueDate = document.querySelector("#task-due-date").value;
-      const taskPriority = document.querySelector("#task-priority").value;
+      const taskTitle_ = document.querySelector("#task-title").value;
+      const taskDescription_ =
+        document.querySelector("#task-description").value.trim() ||
+        "No description set";
+      const taskDueDate_ = document.querySelector("#task-due-date").value;
+      const taskPriority_ = document.querySelector("#task-priority").value;
 
       addTodoToProject(
-        taskTitle,
-        taskDescription,
-        taskDueDate,
-        taskPriority,
+        taskTitle_,
+        taskDescription_,
+        taskDueDate_,
+        taskPriority_,
         project.name
       );
 
@@ -107,9 +170,55 @@ function screenController() {
 
       // update task container with new task
       const taskDiv = document.createElement("div");
-      taskDiv.classList.add("task");
-      taskDiv.textContent = `${taskTitle} - ${taskDueDate}`;
+      taskDiv.classList.add("taskContainerForEach");
+      const taskDivBox1 = document.createElement("div");
+      taskDivBox1.classList.add("taskContainerBox1");
+      const taskDivBox2 = document.createElement("div");
+      taskDivBox2.classList.add("taskContainerBox2");
+      const taskDivBox3 = document.createElement("div");
+      taskDivBox3.classList.add("taskContainerBox3");
 
+      const taskDivBox1_a = document.createElement("div"); //for task title and checkbox
+      taskDivBox1_a.classList.add("taskDivBox1_a");
+      const taskDivBox1_b = document.createElement("div"); //for edit, delete and expand icon
+      taskDivBox1_b.classList.add("taskDivBox1_b");
+
+      const checkBox = document.createElement("input");
+      checkBox.type = "checkbox";
+      taskDivBox1_a.appendChild(checkBox);
+
+      const taskTitle = document.createElement("h4");
+      taskTitle.textContent = `${taskTitle_}`;
+      taskDivBox1_a.appendChild(taskTitle);
+
+      //edit, delete and expand icons
+      const editIcon = document.createElement("img");
+      editIcon.classList.add("svg-icons");
+      editIcon.src = editIconImg;
+      taskDivBox1_b.appendChild(editIcon);
+      const deleteIcon = document.createElement("img");
+      deleteIcon.classList.add("svg-icons");
+      deleteIcon.src = deleteIconImg;
+      taskDivBox1_b.appendChild(deleteIcon);
+      const expandIcon = document.createElement("img");
+      expandIcon.classList.add("svg-icons-expand");
+      expandIcon.src = expandIconImg;
+      taskDivBox1_b.appendChild(expandIcon);
+
+      taskDivBox1.appendChild(taskDivBox1_a);
+      taskDivBox1.appendChild(taskDivBox1_b);
+
+      const dueDate = document.createElement("p");
+      dueDate.textContent = `${taskDueDate_}`;
+      taskDivBox2.appendChild(dueDate);
+
+      const taskDescription = document.createElement("p");
+      taskDescription.textContent = `${taskDescription_}`;
+      taskDivBox3.appendChild(taskDescription);
+
+      taskDiv.appendChild(taskDivBox1);
+      taskDiv.appendChild(taskDivBox2);
+      taskDiv.appendChild(taskDivBox3);
       taskContainer.appendChild(taskDiv);
     });
   };

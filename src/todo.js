@@ -44,6 +44,15 @@ function editTodo(
   return newTodo;
 }
 
+function markTodoAsComplete(title, projectName) {
+  const project = arrOfProjects.find((proj) => proj.name === projectName);
+  if (project) {
+    project.markTaskAsComplete(title);
+  } else {
+    console.log("cannot mark task as complete");
+  }
+}
+
 //function to delete todo from project
 function deleteTodoFromProject(title, projectName) {
   const project = arrOfProjects.find((proj) => proj.name === projectName);
@@ -115,4 +124,13 @@ arrOfProjects.forEach((project) => {
   });
 });
 
+markTodoAsComplete("make dinner", "Default Project 2");
+arrOfProjects.forEach((project) => {
+  console.log(`from project: ${project.name}`);
+  project.getCompletedTasks().forEach((task) => {
+    console.log(
+      `- Task: ${task.title} which was Due: ${task.dueDate} has been completed`
+    );
+  });
+});
 export { addTodoToProject };
