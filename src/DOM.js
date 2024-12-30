@@ -45,6 +45,61 @@ function screenController() {
     projectContainer.appendChild(displayToAddNewProject);
   };
 
+  //function to render the UI of  any task added
+  const renderTaskUI = (task, taskContainer) => {
+    const taskDiv = document.createElement("div");
+    taskDiv.classList.add("taskContainerForEach");
+    const taskDivBox1 = document.createElement("div");
+    taskDivBox1.classList.add("taskContainerBox1");
+    const taskDivBox2 = document.createElement("div");
+    taskDivBox2.classList.add("taskContainerBox2");
+    const taskDivBox3 = document.createElement("div");
+    taskDivBox3.classList.add("taskContainerBox3");
+
+    const taskDivBox1_a = document.createElement("div"); //for task title and checkbox
+    taskDivBox1_a.classList.add("taskDivBox1_a");
+    const taskDivBox1_b = document.createElement("div"); //for edit, delete and expand icon
+    taskDivBox1_b.classList.add("taskDivBox1_b");
+
+    const checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    taskDivBox1_a.appendChild(checkBox);
+
+    const taskTitle = document.createElement("h4");
+    taskTitle.textContent = `${task.title}`;
+    taskDivBox1_a.appendChild(taskTitle);
+
+    //edit, delete and expand icons
+    const editIcon = document.createElement("img");
+    editIcon.classList.add("svg-icons");
+    editIcon.src = editIconImg;
+    taskDivBox1_b.appendChild(editIcon);
+    const deleteIcon = document.createElement("img");
+    deleteIcon.classList.add("svg-icons");
+    deleteIcon.src = deleteIconImg;
+    taskDivBox1_b.appendChild(deleteIcon);
+    const expandIcon = document.createElement("img");
+    expandIcon.classList.add("svg-icons-expand");
+    expandIcon.src = expandIconImg;
+    taskDivBox1_b.appendChild(expandIcon);
+
+    taskDivBox1.appendChild(taskDivBox1_a);
+    taskDivBox1.appendChild(taskDivBox1_b);
+
+    const dueDate = document.createElement("p");
+    dueDate.textContent = `${task.dueDate}`;
+    taskDivBox2.appendChild(dueDate);
+
+    const taskDescription = document.createElement("p");
+    taskDescription.textContent = `${task.description}`;
+    taskDivBox3.appendChild(taskDescription);
+
+    taskDiv.appendChild(taskDivBox1);
+    taskDiv.appendChild(taskDivBox2);
+    taskDiv.appendChild(taskDivBox3);
+    taskContainer.appendChild(taskDiv);
+  };
+
   //function to open project to display its tasks
   const openProject = (project) => {
     const contentDiv = document.querySelector("#content");
@@ -58,57 +113,7 @@ function screenController() {
 
     //initial render of tasks
     project.getTasks().forEach((task) => {
-      const taskDiv = document.createElement("div");
-      taskDiv.classList.add("taskContainerForEach");
-      const taskDivBox1 = document.createElement("div");
-      taskDivBox1.classList.add("taskContainerBox1");
-      const taskDivBox2 = document.createElement("div");
-      taskDivBox2.classList.add("taskContainerBox2");
-      const taskDivBox3 = document.createElement("div");
-      taskDivBox3.classList.add("taskContainerBox3");
-
-      const taskDivBox1_a = document.createElement("div"); //for task title and checkbox
-      taskDivBox1_a.classList.add("taskDivBox1_a");
-      const taskDivBox1_b = document.createElement("div"); //for edit, delete and expand icon
-      taskDivBox1_b.classList.add("taskDivBox1_b");
-
-      const checkBox = document.createElement("input");
-      checkBox.type = "checkbox";
-      taskDivBox1_a.appendChild(checkBox);
-
-      const taskTitle = document.createElement("h4");
-      taskTitle.textContent = `${task.title}`;
-      taskDivBox1_a.appendChild(taskTitle);
-
-      //edit, delete and expand icons
-      const editIcon = document.createElement("img");
-      editIcon.classList.add("svg-icons");
-      editIcon.src = editIconImg;
-      taskDivBox1_b.appendChild(editIcon);
-      const deleteIcon = document.createElement("img");
-      deleteIcon.classList.add("svg-icons");
-      deleteIcon.src = deleteIconImg;
-      taskDivBox1_b.appendChild(deleteIcon);
-      const expandIcon = document.createElement("img");
-      expandIcon.classList.add("svg-icons-expand");
-      expandIcon.src = expandIconImg;
-      taskDivBox1_b.appendChild(expandIcon);
-
-      taskDivBox1.appendChild(taskDivBox1_a);
-      taskDivBox1.appendChild(taskDivBox1_b);
-
-      const dueDate = document.createElement("p");
-      dueDate.textContent = `${task.dueDate}`;
-      taskDivBox2.appendChild(dueDate);
-
-      const taskDescription = document.createElement("p");
-      taskDescription.textContent = `${task.description}`;
-      taskDivBox3.appendChild(taskDescription);
-
-      taskDiv.appendChild(taskDivBox1);
-      taskDiv.appendChild(taskDivBox2);
-      taskDiv.appendChild(taskDivBox3);
-      taskContainer.appendChild(taskDiv);
+      renderTaskUI(task, taskContainer);
     });
 
     //create "add new task" button
@@ -158,7 +163,7 @@ function screenController() {
       const taskDueDate_ = document.querySelector("#task-due-date").value;
       const taskPriority_ = document.querySelector("#task-priority").value;
 
-      addTodoToProject(
+      const newTask = addTodoToProject(
         taskTitle_,
         taskDescription_,
         taskDueDate_,
@@ -169,57 +174,7 @@ function screenController() {
       dialog.close();
 
       // update task container with new task
-      const taskDiv = document.createElement("div");
-      taskDiv.classList.add("taskContainerForEach");
-      const taskDivBox1 = document.createElement("div");
-      taskDivBox1.classList.add("taskContainerBox1");
-      const taskDivBox2 = document.createElement("div");
-      taskDivBox2.classList.add("taskContainerBox2");
-      const taskDivBox3 = document.createElement("div");
-      taskDivBox3.classList.add("taskContainerBox3");
-
-      const taskDivBox1_a = document.createElement("div"); //for task title and checkbox
-      taskDivBox1_a.classList.add("taskDivBox1_a");
-      const taskDivBox1_b = document.createElement("div"); //for edit, delete and expand icon
-      taskDivBox1_b.classList.add("taskDivBox1_b");
-
-      const checkBox = document.createElement("input");
-      checkBox.type = "checkbox";
-      taskDivBox1_a.appendChild(checkBox);
-
-      const taskTitle = document.createElement("h4");
-      taskTitle.textContent = `${taskTitle_}`;
-      taskDivBox1_a.appendChild(taskTitle);
-
-      //edit, delete and expand icons
-      const editIcon = document.createElement("img");
-      editIcon.classList.add("svg-icons");
-      editIcon.src = editIconImg;
-      taskDivBox1_b.appendChild(editIcon);
-      const deleteIcon = document.createElement("img");
-      deleteIcon.classList.add("svg-icons");
-      deleteIcon.src = deleteIconImg;
-      taskDivBox1_b.appendChild(deleteIcon);
-      const expandIcon = document.createElement("img");
-      expandIcon.classList.add("svg-icons-expand");
-      expandIcon.src = expandIconImg;
-      taskDivBox1_b.appendChild(expandIcon);
-
-      taskDivBox1.appendChild(taskDivBox1_a);
-      taskDivBox1.appendChild(taskDivBox1_b);
-
-      const dueDate = document.createElement("p");
-      dueDate.textContent = `${taskDueDate_}`;
-      taskDivBox2.appendChild(dueDate);
-
-      const taskDescription = document.createElement("p");
-      taskDescription.textContent = `${taskDescription_}`;
-      taskDivBox3.appendChild(taskDescription);
-
-      taskDiv.appendChild(taskDivBox1);
-      taskDiv.appendChild(taskDivBox2);
-      taskDiv.appendChild(taskDivBox3);
-      taskContainer.appendChild(taskDiv);
+      renderTaskUI(newTask, taskContainer);
     });
   };
 
