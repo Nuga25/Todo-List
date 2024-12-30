@@ -16,6 +16,7 @@ function createProject(name) {
     const taskIndex = tasks.findIndex((task) => task.title === taskName);
     if (taskIndex > -1) {
       const [completedTask] = tasks.splice(taskIndex, 1);
+      completedTask.completed = true;
       completedTasks.push({ ...completedTask });
     } else {
       console.log(`Task "${taskName}" not found.`);

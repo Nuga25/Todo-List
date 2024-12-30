@@ -1,5 +1,5 @@
 import { addProject, arrOfProjects } from "./project.js";
-import { addTodoToProject } from "./todo.js";
+import { addTodoToProject, markTodoAsComplete } from "./todo.js";
 import editIconImg from "./assets/icons/file-edit-outline.svg";
 import deleteIconImg from "./assets/icons/trash-can-outline.svg";
 import expandIconImg from "./assets/icons/chevron-down.svg";
@@ -46,9 +46,12 @@ function screenController() {
   };
 
   //function to render the UI of  any task added
-  const renderTaskUI = (task, taskContainer) => {
+  const renderTaskUI = (task, projectName, taskContainer) => {
+    console.log("Rendering task:", task.title); // Track how many times this runs
+
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("taskContainerForEach");
+
     const taskDivBox1 = document.createElement("div");
     taskDivBox1.classList.add("taskContainerBox1");
     const taskDivBox2 = document.createElement("div");
@@ -63,6 +66,14 @@ function screenController() {
 
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
+    //if task is completed, check the checkbox and apply style changes
+    if (task.completed) {
+      checkBox.checked = true;
+      taskDivBox1_a.querySelector("h4").classList.add("completed");
+    }
+    checkBox.addEventListener("change", () => {
+      handleCompletedTask(task.title, projectName, taskDiv, checkBox);
+    });
     taskDivBox1_a.appendChild(checkBox);
 
     const taskTitle = document.createElement("h4");
@@ -113,7 +124,7 @@ function screenController() {
 
     //initial render of tasks
     project.getTasks().forEach((task) => {
-      renderTaskUI(task, taskContainer);
+      renderTaskUI(task, project.name, taskContainer);
     });
 
     //create "add new task" button
@@ -145,6 +156,17 @@ function screenController() {
   //function to add a new task to a project
   const addTask = (project, taskContainer) => {
     const dialog = document.querySelector("#dialog");
+
+    const taskTitleInput = document.querySelector("#task-title");
+    const taskDescriptionInput = document.querySelector("#task-description");
+    const taskDueDateInput = document.querySelector("#task-due-date");
+    const taskPriorityInput = document.querySelector("#task-priority");
+
+    taskTitleInput.value = "";
+    taskDescriptionInput.value = "";
+    taskDueDateInput.value = "";
+    taskPriorityInput.value = "";
+
     dialog.showModal();
 
     const closeDialogButton = document.querySelector(".close-dialog");
@@ -156,12 +178,11 @@ function screenController() {
     submitTaskButton.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const taskTitle_ = document.querySelector("#task-title").value;
+      const taskTitle_ = taskTitleInput.value;
       const taskDescription_ =
-        document.querySelector("#task-description").value.trim() ||
-        "No description set";
-      const taskDueDate_ = document.querySelector("#task-due-date").value;
-      const taskPriority_ = document.querySelector("#task-priority").value;
+        taskDescriptionInput.value.trim() || "No description set";
+      const taskDueDate_ = taskDueDateInput.value;
+      const taskPriority_ = taskPriorityInput.value;
 
       const newTask = addTodoToProject(
         taskTitle_,
@@ -174,8 +195,23 @@ function screenController() {
       dialog.close();
 
       // update task container with new task
-      renderTaskUI(newTask, taskContainer);
+      renderTaskUI(newTask, project.name, taskContainer);
     });
+  };
+
+  const handleCompletedTask = (title, projectName, taskElement, checkbox) => {
+    //for each project, if task input box is checked and task.title === title
+    //call function to mark todo as complete
+    //give task appearance a strikethrough
+
+    markTodoAsComplete(title, projectName);
+
+    const taskTitle = taskElement.querySelector("h4");
+    if (checkbox.checked) {
+      taskTitle.classList.add("completed");
+    } else {
+      taskTitle.classList.remove("completed");
+    }
   };
 
   return { printAvailableProject, addProjectButton };

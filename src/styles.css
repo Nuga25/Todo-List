@@ -178,3 +178,9 @@ textarea {
   width: 20px;
   padding-left: 5px;
 }
+
+/* styling for completed task */
+.completed {
+  text-decoration: line-through;
+  color: #808080;
+}

@@ -2,9 +2,11 @@
 import "./styles.css";
 import { screenController } from "./DOM.js";
 
-screenController().printAvailableProject();
+const controller = screenController();
+
+controller.printAvailableProject();
 
 const addProjectButton = document.querySelector(".addProjectButton");
 addProjectButton.addEventListener("click", () => {
-  screenController().addProjectButton();
+  controller.addProjectButton();
 });

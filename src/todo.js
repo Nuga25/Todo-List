@@ -17,6 +17,7 @@ function addTodoToProject(title, description, dueDate, priority, projectName) {
   const project = arrOfProjects.find((proj) => proj.name === projectName);
   if (project) {
     project.addTask(task);
+    console.log(project.getTasks());
   } else {
     console.log("project name does not exist");
   }
@@ -49,7 +50,7 @@ function markTodoAsComplete(title, projectName) {
   if (project) {
     project.markTaskAsComplete(title);
   } else {
-    console.log("cannot mark task as complete");
+    console.log("cannot mark task as complete because project not found");
   }
 }
 
@@ -133,4 +134,4 @@ arrOfProjects.forEach((project) => {
     );
   });
 });
-export { addTodoToProject };
+export { addTodoToProject, markTodoAsComplete };
