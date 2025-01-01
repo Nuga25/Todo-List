@@ -1,23 +1,21 @@
 //function to create new projects
 function createProject(name) {
   const tasks = [];
-  const completedTasks = [];
 
   const addTask = (task) => {
+    task.completed = false;
     tasks.push(task);
   };
 
   const removeTask = (taskName) => {
     const index = tasks.findIndex((task) => task.title === taskName);
-    tasks.splice(index, 1);
+    if (index > -1) tasks.splice(index, 1);
   };
 
   const markTaskAsComplete = (taskName) => {
-    const taskIndex = tasks.findIndex((task) => task.title === taskName);
-    if (taskIndex > -1) {
-      const [completedTask] = tasks.splice(taskIndex, 1);
-      completedTask.completed = true;
-      completedTasks.push({ ...completedTask });
+    const task = tasks.find((task) => task.title === taskName);
+    if (task) {
+      task.completed = !task.completed; // toggle completion status
     } else {
       console.log(`Task "${taskName}" not found.`);
     }
@@ -28,7 +26,11 @@ function createProject(name) {
   };
 
   const getCompletedTasks = () => {
-    return [...completedTasks];
+    return tasks.filter((task) => task.completed);
+  };
+
+  const getPendingTasks = () => {
+    return tasks.filter((task) => !task.completed);
   };
 
   return {
@@ -38,6 +40,7 @@ function createProject(name) {
     markTaskAsComplete,
     getTasks,
     getCompletedTasks,
+    getPendingTasks,
   };
 }
 

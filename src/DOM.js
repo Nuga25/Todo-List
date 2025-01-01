@@ -1,5 +1,9 @@
 import { addProject, arrOfProjects } from "./project.js";
-import { addTodoToProject, markTodoAsComplete } from "./todo.js";
+import {
+  addTodoToProject,
+  markTodoAsComplete,
+  deleteTodoFromProject,
+} from "./todo.js";
 import editIconImg from "./assets/icons/file-edit-outline.svg";
 import deleteIconImg from "./assets/icons/trash-can-outline.svg";
 import expandIconImg from "./assets/icons/chevron-down.svg";
@@ -47,10 +51,9 @@ function screenController() {
 
   //function to render the UI of  any task added
   const renderTaskUI = (task, projectName, taskContainer) => {
-    console.log("Rendering task:", task.title); // Track how many times this runs
-
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("taskContainerForEach");
+    taskDiv.setAttribute("data-task-title", task.title); // Unique identifier for each task
 
     const taskDivBox1 = document.createElement("div");
     taskDivBox1.classList.add("taskContainerBox1");
@@ -66,18 +69,20 @@ function screenController() {
 
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
-    //if task is completed, check the checkbox and apply style changes
-    if (task.completed) {
-      checkBox.checked = true;
-      taskDivBox1_a.querySelector("h4").classList.add("completed");
-    }
-    checkBox.addEventListener("change", () => {
-      handleCompletedTask(task.title, projectName, taskDiv, checkBox);
-    });
-    taskDivBox1_a.appendChild(checkBox);
+    checkBox.checked = task.completed; // set checkbox state based on task flag
 
     const taskTitle = document.createElement("h4");
     taskTitle.textContent = `${task.title}`;
+    //apply style for completed tasks
+    if (task.completed) {
+      taskDivBox1.classList.add("completed");
+    }
+
+    checkBox.addEventListener("change", () => {
+      handleCompletedTask(task.title, projectName, taskDiv, checkBox);
+    });
+
+    taskDivBox1_a.appendChild(checkBox);
     taskDivBox1_a.appendChild(taskTitle);
 
     //edit, delete and expand icons
@@ -139,13 +144,32 @@ function screenController() {
     //clear completed task button
     const bottomDiv = document.createElement("div");
     bottomDiv.classList.add("clearCompletedTasksBox");
-    const clearCompletedTaskButton = document.createElement("p");
+    let clearCompletedTaskButton = document.createElement("p");
     clearCompletedTaskButton.textContent = "clear completed tasks";
     bottomDiv.appendChild(clearCompletedTaskButton);
     const deleteIcon = document.createElement("img");
     deleteIcon.src = deleteIconImg;
     deleteIcon.classList.add("deleteCompletedIcon");
     bottomDiv.appendChild(deleteIcon);
+
+    // Remove existing listeners by replacing the button with a clone
+    const newClearCompletedTaskButton =
+      clearCompletedTaskButton.cloneNode(true);
+    clearCompletedTaskButton.replaceWith(newClearCompletedTaskButton);
+    clearCompletedTaskButton = newClearCompletedTaskButton; // Reassign to the new button
+
+    clearCompletedTaskButton.addEventListener("click", () => {
+      project.getCompletedTasks().forEach((task) => {
+        deleteTodoFromProject(task.title, project.name);
+        // Find the container corresponding to the completed task
+        const taskContainer = document.querySelector(
+          `.taskContainerForEach[data-task-title="${task.title}"]`
+        );
+        if (taskContainer) {
+          taskContainer.remove(); // Remove the specific task container
+        }
+      });
+    });
 
     contentDiv.appendChild(projectTitle);
     contentDiv.appendChild(addTaskButton);
@@ -174,9 +198,16 @@ function screenController() {
       dialog.close();
     });
 
-    const submitTaskButton = document.querySelector("#submit-task-btn");
+    let submitTaskButton = document.querySelector("#submit-task-btn");
+
+    // Remove existing listeners by replacing the button with a clone
+    const newSubmitTaskButton = submitTaskButton.cloneNode(true);
+    submitTaskButton.replaceWith(newSubmitTaskButton);
+    submitTaskButton = newSubmitTaskButton; // Reassign to the new button
+
     submitTaskButton.addEventListener("click", (e) => {
       e.preventDefault();
+      console.log("submitting form now");
 
       const taskTitle_ = taskTitleInput.value;
       const taskDescription_ =
@@ -184,7 +215,7 @@ function screenController() {
       const taskDueDate_ = taskDueDateInput.value;
       const taskPriority_ = taskPriorityInput.value;
 
-      const newTask = addTodoToProject(
+      let newTask = addTodoToProject(
         taskTitle_,
         taskDescription_,
         taskDueDate_,
@@ -199,19 +230,21 @@ function screenController() {
     });
   };
 
+  //function to handle tasks marked as complete
   const handleCompletedTask = (title, projectName, taskElement, checkbox) => {
-    //for each project, if task input box is checked and task.title === title
-    //call function to mark todo as complete
-    //give task appearance a strikethrough
-
     markTodoAsComplete(title, projectName);
 
-    const taskTitle = taskElement.querySelector("h4");
+    const taskTitle = taskElement.querySelector(".taskContainerBox1");
     if (checkbox.checked) {
       taskTitle.classList.add("completed");
     } else {
       taskTitle.classList.remove("completed");
     }
+  };
+
+  //function to clear all completed tasks
+  const clearCompletedTasks = () => {
+    let clearButton = document.querySelector;
   };
 
   return { printAvailableProject, addProjectButton };

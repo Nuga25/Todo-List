@@ -22,6 +22,7 @@ function addTodoToProject(title, description, dueDate, priority, projectName) {
     console.log("project name does not exist");
   }
 
+  console.log("Task is : ", task);
   return task;
 }
 
@@ -134,4 +135,4 @@ arrOfProjects.forEach((project) => {
     );
   });
 });
-export { addTodoToProject, markTodoAsComplete };
+export { addTodoToProject, markTodoAsComplete, deleteTodoFromProject };

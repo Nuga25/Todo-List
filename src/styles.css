@@ -181,6 +181,18 @@ textarea {
 
 /* styling for completed task */
 .completed {
-  text-decoration: line-through;
   color: #808080;
+  position: relative;
+}
+
+.completed::before {
+  content: "";
+  position: absolute;
+  top: 50%; /* Center the line vertically */
+  left: 0;
+  width: 100%;
+  height: 1px; /* Thickness of the line */
+  background-color: black; /* Color of the line */
+  transform: translateY(-50%);
+  z-index: 1;
 }
