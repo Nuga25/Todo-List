@@ -8,14 +8,22 @@ export function tasksDueToday() {
   contentPage.textContent = "";
   const controller = screenController();
 
-  const today = new Date(); // Current date
+  const today = new Date(); //today's date
+  const todayYear = today.getFullYear();
+  const todayMonth = today.getMonth();
+  const todayDate = today.getDate();
 
   const projects = arrOfProjects;
   projects.forEach((project) => {
     project
       .getTasks()
       .filter((task) => {
-        return new Date(task.dueDate) === today;
+        const taskDueDate = new Date(task.dueDate);
+        return (
+          taskDueDate.getFullYear() === todayYear &&
+          taskDueDate.getMonth() === todayMonth &&
+          taskDueDate.getDate() === todayDate
+        );
       })
       .forEach((task) => {
         controller.renderTaskUI(task, project.name, contentPage);
