@@ -1,4 +1,9 @@
-import { addProject, arrOfProjects } from "./project.js";
+import {
+  addProject,
+  arrOfProjects,
+  editProjectName,
+  deleteProject,
+} from "./project.js";
 import {
   addTodoToProject,
   markTodoAsComplete,
@@ -17,16 +22,89 @@ function screenController() {
     projectContainer.textContent = "";
 
     arrOfProjects.forEach((proj) => {
-      const projectDiv = document.createElement("div");
-      projectDiv.classList.add("projectName");
-      projectDiv.textContent = proj.name;
+      const projectNameContainer = document.createElement("div");
+      projectNameContainer.classList.add("projectNameContainerForeach");
+      const projectDiv_a = document.createElement("div");
+      projectDiv_a.classList.add("projectName");
+      const projectDiv_b = document.createElement("div");
+      projectDiv_b.classList.add("project-icons-div");
+
+      projectDiv_a.textContent = proj.name;
+
+      //to edit project name
+      const editIcon = document.createElement("img");
+      editIcon.classList.add("svg-icons-project");
+      editIcon.src = editIconImg;
+      editIcon.addEventListener("click", () => {
+        const projectContainer = document.querySelector("#projectDiv");
+        const displayToAddNewProject = document.createElement("div");
+        displayToAddNewProject.classList.add("displayToAddNewProject");
+        const displayToAddNewProject_box1 = document.createElement("div");
+        const displayToAddNewProject_box2 = document.createElement("div");
+        displayToAddNewProject_box2.classList.add(
+          "displayToAddNewProject_box2"
+        );
+        const newProjectInput = document.createElement("input");
+        newProjectInput.classList.add("newProjectInput");
+        const addNewProjectButton = document.createElement("button");
+        addNewProjectButton.classList.add("addNewProjectButtons");
+        const cancelButton = document.createElement("button");
+        cancelButton.classList.add("addNewProjectButtons");
+
+        newProjectInput.value = proj.name;
+        addNewProjectButton.textContent = "Save Change";
+        cancelButton.textContent = "Cancel";
+
+        addNewProjectButton.addEventListener("click", () => {
+          const projectName = newProjectInput.value.trim();
+
+          // Check if the project name is empty
+          if (!projectName) {
+            alert("Project name cannot be empty!");
+            return;
+          }
+          editProjectName(proj.name, projectName);
+          printAvailableProject();
+          displayToAddNewProject.textContent = "";
+          document.querySelector(".addProjectButton").disabled = false;
+        });
+
+        cancelButton.addEventListener("click", () => {
+          displayToAddNewProject.textContent = "";
+          displayToAddNewProject.style.display = "none";
+          document.querySelector(".addProjectButton").disabled = false;
+        });
+
+        displayToAddNewProject_box1.appendChild(newProjectInput);
+        displayToAddNewProject_box2.appendChild(addNewProjectButton);
+        displayToAddNewProject_box2.appendChild(cancelButton);
+        displayToAddNewProject.appendChild(displayToAddNewProject_box1);
+        displayToAddNewProject.appendChild(displayToAddNewProject_box2);
+        projectContainer.appendChild(displayToAddNewProject);
+      });
+      projectDiv_b.appendChild(editIcon);
+
+      //to delete project
+      const deleteIcon = document.createElement("img");
+      deleteIcon.classList.add("svg-icons-project");
+      deleteIcon.src = deleteIconImg;
+      deleteIcon.addEventListener("click", () => {
+        deleteProject(proj.name);
+        let contentDiv = document.querySelector("#content");
+        contentDiv.textContent = "";
+        printAvailableProject();
+      });
+      projectDiv_b.appendChild(deleteIcon);
+
+      projectNameContainer.appendChild(projectDiv_a);
+      projectNameContainer.appendChild(projectDiv_b);
 
       //click event to open project and display tasks
-      projectDiv.addEventListener("click", () => {
+      projectDiv_a.addEventListener("click", () => {
         openProject(proj);
       });
 
-      projectContainer.appendChild(projectDiv);
+      projectContainer.appendChild(projectNameContainer);
     });
   };
 
@@ -386,7 +464,6 @@ function screenController() {
 
     submitTaskButton.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("submitting form now");
 
       const taskTitle_ = taskTitleInput.value;
       const taskDescription_ =

@@ -139,10 +139,28 @@ textarea {
   width: 8rem;
 }
 
-.projectName {
+.projectNameContainerForeach {
+  display: flex;
   padding: 5px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #fff;
+}
+
+.projectName {
   font-size: 18px;
   cursor: pointer;
+}
+
+.project-icons-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.svg-icons-project {
+  width: 18px;
 }
 
 /* task container styling */
