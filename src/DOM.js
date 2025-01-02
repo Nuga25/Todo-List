@@ -123,12 +123,7 @@ function screenController() {
       const updatedTitle = taskTitleInput.value.trim();
       const updatedDescription =
         taskDescriptionInput.value.trim() || "No description set";
-      const updatedDueDate = `Due ${formatDistanceToNow(
-        taskDueDateInput.value,
-        {
-          addSuffix: true,
-        }
-      )}`;
+      const updatedDueDate = taskDueDateInput.value;
       const updatedPriority = taskPriorityInput.value;
 
       editTodo(
@@ -259,7 +254,16 @@ function screenController() {
     taskDivBox1.appendChild(taskDivBox1_b);
 
     const dueDate = document.createElement("p");
-    dueDate.textContent = `${task.dueDate}`;
+    const theDate = new Date(task.dueDate);
+    if (isNaN(theDate)) {
+      dueDate.textContent = "Due date is invalid"; // Handle invalid dates
+      console.log(theDate);
+    } else {
+      const editedDate = formatDistanceToNow(theDate, {
+        addSuffix: true,
+      });
+      dueDate.textContent = `Due ${editedDate}`;
+    }
     taskDivBox2.appendChild(dueDate);
 
     const taskDescription = document.createElement("p");
@@ -388,15 +392,12 @@ function screenController() {
       const taskDescription_ =
         taskDescriptionInput.value.trim() || "No description set";
       const taskDueDate_ = taskDueDateInput.value;
-      const formattedDate = `Due ${formatDistanceToNow(taskDueDate_, {
-        addSuffix: true,
-      })}`;
       const taskPriority_ = taskPriorityInput.value;
 
       let newTask = addTodoToProject(
         taskTitle_,
         taskDescription_,
-        formattedDate,
+        taskDueDate_,
         taskPriority_,
         project.name
       );
@@ -420,7 +421,7 @@ function screenController() {
     }
   };
 
-  return { printAvailableProject, addProjectButton };
+  return { printAvailableProject, addProjectButton, renderTaskUI };
 }
 
 export { screenController };

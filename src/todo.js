@@ -70,37 +70,37 @@ addTodoToProject(
   "make dinner",
   "rice flour for four",
   "today",
-  "medium",
+  "Medium",
   "Default PROJECT 1"
 );
 addTodoToProject(
   "make bed",
   "before you lay down",
   "today",
-  "high",
+  "High",
   "Default PROJECT 1"
 );
 
 addProject("PROJECT 2");
 addTodoToProject(
-  "make dinner",
+  "make food",
   "rice flour for four",
   "today",
-  "medium",
+  "Medium",
   "PROJECT 2"
 );
 addTodoToProject(
   "make bed",
   "before you lay down",
   "today",
-  "high",
+  "High",
   "PROJECT 2"
 );
 addTodoToProject(
   "make bed",
   "before you lay down",
-  "today",
-  "high",
+  "25-01-2025",
+  "High",
   "PROJECT 2"
 );
 //deleteProject("PROJECT 1");
@@ -111,7 +111,7 @@ editTodo(
   "new title",
   "new description",
   "23-12-24",
-  "high",
+  "High",
   "make bed",
   "PROJECT 2"
 );
@@ -126,7 +126,7 @@ arrOfProjects.forEach((project) => {
   });
 });
 
-markTodoAsComplete("make dinner", "Default Project 2");
+markTodoAsComplete("make food", "Default Project 2");
 arrOfProjects.forEach((project) => {
   console.log(`from project: ${project.name}`);
   project.getCompletedTasks().forEach((task) => {
