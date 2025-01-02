@@ -116,6 +116,29 @@ textarea {
   cursor: pointer;
 }
 
+.displayToAddNewProject {
+  border: 1px solid #fff;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.displayToAddNewProject_box2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.newProjectInput {
+  width: 100%;
+}
+
+.addNewProjectButtons {
+  width: 8rem;
+}
+
 .projectName {
   padding: 5px;
   font-size: 18px;
@@ -204,4 +227,6 @@ textarea {
 
 .taskDescriptionText {
   display: none;
+  font-style: italic;
+  margin-top: 5px;
 }

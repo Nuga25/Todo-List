@@ -5,6 +5,7 @@ import {
   deleteTodoFromProject,
   editTodo,
 } from "./todo.js";
+import { formatDistanceToNow } from "date-fns";
 import editIconImg from "./assets/icons/file-edit-outline.svg";
 import deleteIconImg from "./assets/icons/trash-can-outline.svg";
 import expandIconImg from "./assets/icons/chevron-down.svg";
@@ -33,20 +34,45 @@ function screenController() {
   const addProjectButton = () => {
     const projectContainer = document.querySelector("#projectDiv");
     const displayToAddNewProject = document.createElement("div");
+    displayToAddNewProject.classList.add("displayToAddNewProject");
+    const displayToAddNewProject_box1 = document.createElement("div");
+    const displayToAddNewProject_box2 = document.createElement("div");
+    displayToAddNewProject_box2.classList.add("displayToAddNewProject_box2");
     const newProjectInput = document.createElement("input");
+    newProjectInput.classList.add("newProjectInput");
     const addNewProjectButton = document.createElement("button");
+    addNewProjectButton.classList.add("addNewProjectButtons");
+    const cancelButton = document.createElement("button");
+    cancelButton.classList.add("addNewProjectButtons");
 
-    addNewProjectButton.textContent = "save new project";
+    addNewProjectButton.textContent = "Save";
+    cancelButton.textContent = "Cancel";
 
     addNewProjectButton.addEventListener("click", () => {
-      const projectName = newProjectInput.value;
+      const projectName = newProjectInput.value.trim();
+
+      // Check if the project name is empty
+      if (!projectName) {
+        alert("Project name cannot be empty!");
+        return;
+      }
       addProject(projectName);
       printAvailableProject();
       displayToAddNewProject.textContent = "";
+      document.querySelector(".addProjectButton").disabled = false;
     });
 
-    displayToAddNewProject.appendChild(newProjectInput);
-    displayToAddNewProject.appendChild(addNewProjectButton);
+    cancelButton.addEventListener("click", () => {
+      displayToAddNewProject.textContent = "";
+      displayToAddNewProject.style.display = "none";
+      document.querySelector(".addProjectButton").disabled = false;
+    });
+
+    displayToAddNewProject_box1.appendChild(newProjectInput);
+    displayToAddNewProject_box2.appendChild(addNewProjectButton);
+    displayToAddNewProject_box2.appendChild(cancelButton);
+    displayToAddNewProject.appendChild(displayToAddNewProject_box1);
+    displayToAddNewProject.appendChild(displayToAddNewProject_box2);
     projectContainer.appendChild(displayToAddNewProject);
   };
 
@@ -97,7 +123,12 @@ function screenController() {
       const updatedTitle = taskTitleInput.value.trim();
       const updatedDescription =
         taskDescriptionInput.value.trim() || "No description set";
-      const updatedDueDate = taskDueDateInput.value;
+      const updatedDueDate = `Due ${formatDistanceToNow(
+        taskDueDateInput.value,
+        {
+          addSuffix: true,
+        }
+      )}`;
       const updatedPriority = taskPriorityInput.value;
 
       editTodo(
@@ -115,7 +146,19 @@ function screenController() {
       const taskContainer = document.querySelector(
         `.taskContainerForEach[data-task-title="${taskTitle}"]`
       );
+
       if (taskContainer) {
+        //styling for task divs based on task priority
+        if (updatedPriority === "Low") {
+          taskContainer.style.borderLeft = "2px solid green";
+        }
+        if (updatedPriority === "Medium") {
+          taskContainer.style.borderLeft = "2px solid yellow";
+        }
+        if (updatedPriority === "High") {
+          taskContainer.style.borderLeft = "2px solid red";
+        }
+
         // Update the task's content
         const taskTitleElement = taskContainer.querySelector("h4");
         taskTitleElement.textContent = updatedTitle;
@@ -223,6 +266,18 @@ function screenController() {
     taskDescription.classList.add("taskDescriptionText");
     taskDescription.textContent = `${task.description}`;
     taskDivBox3.appendChild(taskDescription);
+
+    //styling for task divs based on task priority
+    const taskPriority = task.priority;
+    if (taskPriority === "Low") {
+      taskDiv.style.borderLeft = "2px solid green";
+    }
+    if (taskPriority === "Medium") {
+      taskDiv.style.borderLeft = "2px solid yellow";
+    }
+    if (taskPriority === "High") {
+      taskDiv.style.borderLeft = "2px solid red";
+    }
 
     taskDiv.appendChild(taskDivBox1);
     taskDiv.appendChild(taskDivBox2);
@@ -333,12 +388,15 @@ function screenController() {
       const taskDescription_ =
         taskDescriptionInput.value.trim() || "No description set";
       const taskDueDate_ = taskDueDateInput.value;
+      const formattedDate = `Due ${formatDistanceToNow(taskDueDate_, {
+        addSuffix: true,
+      })}`;
       const taskPriority_ = taskPriorityInput.value;
 
       let newTask = addTodoToProject(
         taskTitle_,
         taskDescription_,
-        taskDueDate_,
+        formattedDate,
         taskPriority_,
         project.name
       );

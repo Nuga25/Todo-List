@@ -8,5 +8,6 @@ controller.printAvailableProject();
 
 const addProjectButton = document.querySelector(".addProjectButton");
 addProjectButton.addEventListener("click", () => {
+  addProjectButton.disabled = true;
   controller.addProjectButton();
 });
