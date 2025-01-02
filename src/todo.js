@@ -135,4 +135,9 @@ arrOfProjects.forEach((project) => {
     );
   });
 });
-export { addTodoToProject, markTodoAsComplete, deleteTodoFromProject };
+export {
+  addTodoToProject,
+  markTodoAsComplete,
+  deleteTodoFromProject,
+  editTodo,
+};

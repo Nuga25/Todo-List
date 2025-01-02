@@ -3,6 +3,7 @@ import {
   addTodoToProject,
   markTodoAsComplete,
   deleteTodoFromProject,
+  editTodo,
 } from "./todo.js";
 import editIconImg from "./assets/icons/file-edit-outline.svg";
 import deleteIconImg from "./assets/icons/trash-can-outline.svg";
@@ -49,6 +50,89 @@ function screenController() {
     projectContainer.appendChild(displayToAddNewProject);
   };
 
+  //function to edit todo
+  const editTodoFunction = (taskTitle, projectName) => {
+    const dialog = document.querySelector("#dialog");
+
+    // Fetch the existing task details
+    const project = arrOfProjects.find((proj) => proj.name === projectName);
+    const taskToEdit = project
+      .getTasks()
+      .find((task) => task.title === taskTitle);
+
+    if (!taskToEdit) {
+      console.error("Task not found for editing.");
+      return;
+    }
+
+    // Populate the dialog inputs with the current task values
+    const taskTitleInput = document.querySelector("#task-title");
+    const taskDescriptionInput = document.querySelector("#task-description");
+    const taskDueDateInput = document.querySelector("#task-due-date");
+    const taskPriorityInput = document.querySelector("#task-priority");
+
+    taskTitleInput.value = taskToEdit.title;
+    taskDescriptionInput.value = taskToEdit.description;
+    taskDueDateInput.value = taskToEdit.dueDate;
+    taskPriorityInput.value = taskToEdit.priority;
+
+    dialog.showModal();
+
+    const closeDialogButton = document.querySelector(".close-dialog");
+    closeDialogButton.addEventListener("click", () => {
+      dialog.close();
+    });
+
+    let submitTaskButton = document.querySelector("#submit-task-btn");
+    submitTaskButton.textContent = "Save Changes";
+
+    // Remove existing listeners by replacing the button with a clone
+    const newSubmitTaskButton = submitTaskButton.cloneNode(true);
+    submitTaskButton.replaceWith(newSubmitTaskButton);
+    submitTaskButton = newSubmitTaskButton; // Reassign to the new button
+
+    submitTaskButton.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const updatedTitle = taskTitleInput.value.trim();
+      const updatedDescription =
+        taskDescriptionInput.value.trim() || "No description set";
+      const updatedDueDate = taskDueDateInput.value;
+      const updatedPriority = taskPriorityInput.value;
+
+      editTodo(
+        updatedTitle,
+        updatedDescription,
+        updatedDueDate,
+        updatedPriority,
+        taskTitle,
+        projectName
+      );
+
+      dialog.close();
+
+      // Re-render the task UI with the updated values
+      const taskContainer = document.querySelector(
+        `.taskContainerForEach[data-task-title="${taskTitle}"]`
+      );
+      if (taskContainer) {
+        // Update the task's content
+        const taskTitleElement = taskContainer.querySelector("h4");
+        taskTitleElement.textContent = updatedTitle;
+
+        const taskDescriptionElement = taskContainer.querySelector(
+          ".taskContainerBox3 p"
+        );
+        taskDescriptionElement.textContent = updatedDescription;
+
+        const taskDueDateElement = taskContainer.querySelector(
+          ".taskContainerBox2 p"
+        );
+        taskDueDateElement.textContent = updatedDueDate;
+      }
+    });
+  };
+
   //function to render the UI of  any task added
   const renderTaskUI = (task, projectName, taskContainer) => {
     const taskDiv = document.createElement("div");
@@ -87,14 +171,43 @@ function screenController() {
 
     //edit, delete and expand icons
     const editIcon = document.createElement("img");
+    editIcon.addEventListener("click", () => {
+      editTodoFunction(task.title, projectName);
+    });
     editIcon.classList.add("svg-icons");
     editIcon.src = editIconImg;
     taskDivBox1_b.appendChild(editIcon);
     const deleteIcon = document.createElement("img");
+    //event listener of click to delete todo
+    deleteIcon.addEventListener("click", () => {
+      deleteTodoFromProject(task.title, projectName);
+      const taskContainer = document.querySelector(
+        `.taskContainerForEach[data-task-title="${task.title}"]`
+      );
+      if (taskContainer) {
+        taskContainer.remove(); // Remove the specific task container
+      }
+    });
     deleteIcon.classList.add("svg-icons");
     deleteIcon.src = deleteIconImg;
     taskDivBox1_b.appendChild(deleteIcon);
     const expandIcon = document.createElement("img");
+    expandIcon.addEventListener("click", () => {
+      const descriptionText = taskDiv.querySelector(".taskDescriptionText");
+
+      // Toggle description visibility
+      if (
+        descriptionText.style.display === "none" ||
+        descriptionText.style.display === ""
+      ) {
+        descriptionText.style.display = "block"; // Show the description
+      } else {
+        descriptionText.style.display = "none"; // Hide the description
+      }
+
+      // Flip the icon (toggle a class for the flip effect)
+      expandIcon.classList.toggle("flipped");
+    });
     expandIcon.classList.add("svg-icons-expand");
     expandIcon.src = expandIconImg;
     taskDivBox1_b.appendChild(expandIcon);
@@ -107,6 +220,7 @@ function screenController() {
     taskDivBox2.appendChild(dueDate);
 
     const taskDescription = document.createElement("p");
+    taskDescription.classList.add("taskDescriptionText");
     taskDescription.textContent = `${task.description}`;
     taskDivBox3.appendChild(taskDescription);
 
@@ -186,9 +300,15 @@ function screenController() {
     const taskDueDateInput = document.querySelector("#task-due-date");
     const taskPriorityInput = document.querySelector("#task-priority");
 
+    // Set the default date to today's date
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Month is zero-indexed, so add 1
+    const day = String(today.getDate()).padStart(2, "0"); // Day is zero-padded
+
     taskTitleInput.value = "";
     taskDescriptionInput.value = "";
-    taskDueDateInput.value = "";
+    taskDueDateInput.value = `${year}-${month}-${day}`;
     taskPriorityInput.value = "";
 
     dialog.showModal();
@@ -240,11 +360,6 @@ function screenController() {
     } else {
       taskTitle.classList.remove("completed");
     }
-  };
-
-  //function to clear all completed tasks
-  const clearCompletedTasks = () => {
-    let clearButton = document.querySelector;
   };
 
   return { printAvailableProject, addProjectButton };
