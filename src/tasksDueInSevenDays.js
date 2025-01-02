@@ -3,16 +3,28 @@ import { screenController } from "./DOM.js";
 import { deleteTodoFromProject } from "./todo.js";
 import deleteIconImg from "./assets/icons/trash-can-outline.svg";
 
-export function allTasksPage() {
+export function tasksDueInSevenDays() {
   let contentPage = document.querySelector("#content");
   contentPage.textContent = "";
   const controller = screenController();
 
+  const today = new Date(); // Current date
+  const sevenDaysFromNow = new Date();
+  sevenDaysFromNow.setDate(today.getDate() + 7);
+
   const projects = arrOfProjects;
   projects.forEach((project) => {
-    project.getTasks().forEach((task) => {
-      controller.renderTaskUI(task, project.name, contentPage);
-    });
+    project
+      .getTasks()
+      .filter((task) => {
+        return (
+          new Date(task.dueDate) >= today &&
+          new Date(task.dueDate) <= sevenDaysFromNow
+        );
+      })
+      .forEach((task) => {
+        controller.renderTaskUI(task, project.name, contentPage);
+      });
   });
 
   //clear completed task button
@@ -46,5 +58,9 @@ export function allTasksPage() {
     });
   });
 
-  contentPage.appendChild(bottomDiv);
+  if (contentPage.textContent !== "") {
+    contentPage.appendChild(bottomDiv);
+  } else {
+    contentPage.textContent = "tasks due in seven days would show up here";
+  }
 }

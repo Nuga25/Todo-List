@@ -274,13 +274,13 @@ function screenController() {
     //styling for task divs based on task priority
     const taskPriority = task.priority;
     if (taskPriority === "Low") {
-      taskDiv.style.borderLeft = "2px solid green";
+      taskDiv.style.borderLeft = "2px solid #008000";
     }
     if (taskPriority === "Medium") {
-      taskDiv.style.borderLeft = "2px solid yellow";
+      taskDiv.style.borderLeft = "2px solid #ffff00";
     }
     if (taskPriority === "High") {
-      taskDiv.style.borderLeft = "2px solid red";
+      taskDiv.style.borderLeft = "2px solid #ff0000";
     }
 
     taskDiv.appendChild(taskDivBox1);
