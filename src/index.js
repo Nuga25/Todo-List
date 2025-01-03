@@ -6,6 +6,21 @@ import { allTasksPage } from "./allTasksPage.js";
 import { tasksDueInSevenDays } from "./tasksDueInSevenDays.js";
 import { tasksDueToday } from "./tasksDueToday.js";
 
+const hamburgerMenu = document.querySelector(".hamburger-menu");
+hamburgerMenu.addEventListener("click", () => {
+  const sidebar = document.querySelector(".sidebar");
+
+  // Toggle description visibility
+  if (sidebar.style.display === "none" || sidebar.style.display === "") {
+    sidebar.style.display = "block"; // Show the description
+  } else {
+    sidebar.style.display = "none"; // Hide the description
+  }
+
+  // Flip the icon (toggle a class for the flip effect)
+  hamburgerMenu.classList.toggle("flipped");
+});
+
 //TO ADD CLASS OF ACTIVE TO SIDEBAR MENU
 document.addEventListener("DOMContentLoaded", () => {
   const navButtons = document.querySelectorAll(".sidebar-menus");

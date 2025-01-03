@@ -27,6 +27,7 @@ export function pageLoad() {
   contentPage_a.appendChild(welcomeParagraph2);
 
   const illustrationImg = document.createElement("img");
+  illustrationImg.classList.add("pageLoadImg");
   illustrationImg.src = pageLoadImg;
   illustrationImg.width = "450";
   contentPage_b.appendChild(illustrationImg);

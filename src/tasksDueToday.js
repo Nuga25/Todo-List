@@ -70,6 +70,7 @@ export function tasksDueToday() {
     const container = document.createElement("div");
 
     const illustrationEmptyImg = document.createElement("img");
+    illustrationEmptyImg.classList.add("emptyPageImg");
     illustrationEmptyImg.src = illustrationImg;
     illustrationEmptyImg.width = "450";
     const paragraphText = document.createElement("p");

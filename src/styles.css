@@ -21,6 +21,18 @@ header {
   align-items: center;
   background-color: #2e073f;
   color: #fff;
+  padding: 5px;
+}
+
+.hamburger-menu {
+  width: 40px;
+  fill: #fff;
+  cursor: pointer;
+  display: none;
+}
+
+.hamburger-menu.flipped {
+  transform: rotate(45deg);
 }
 
 main {
@@ -405,37 +417,81 @@ small > a {
 }
 
 /* Hide the default checkbox appearance */
-#myCheckbox {
+/* #myCheckbox {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   width: 18px;
   height: 18px;
   border: 2px solid #ccc;
-  border-radius: 6px; /* Rounded corners */
+  border-radius: 6px; 
   background-color: #f0f0f0;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-}
+} */
 
 /* Add a check mark when checked */
-#myCheckbox:checked {
-  background-color: #4caf50; /* Green background when checked */
-  border-color: #4caf50; /* Green border */
-}
+/* #myCheckbox:checked {
+  background-color: #4caf50; 
+  border-color: #4caf50;
+} */
 
 /* Display a check mark inside the checkbox when checked */
-#myCheckbox:checked::after {
-  content: "✔"; /* Check mark symbol */
+/* #myCheckbox:checked::after {
+  content: "✔"; 
   position: absolute;
   left: 3px;
   top: 3px;
   color: white;
   font-size: 18px;
-}
+} */
 
 /* Add hover effect */
-#myCheckbox:hover {
+/* #myCheckbox:hover {
   border-color: #007b33;
   background-color: #e0e0e0;
+} */
+
+footer {
+  background-color: #2e073f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+footer > small > a {
+  text-decoration: none;
+  color: #fff;
+}
+
+@media (max-width: 1124px) {
+  main {
+    grid-template-columns: 1fr 3fr;
+  }
+}
+
+@media (max-width: 906px) {
+  header {
+    justify-content: space-between;
+  }
+  .hamburger-menu {
+    display: block;
+  }
+  .sidebar {
+    display: none;
+    position: absolute;
+    width: 90%;
+    bottom: 0;
+    top: 0;
+  }
+  .pageLoadImg {
+    width: 90%;
+  }
+  .emptyPageImg {
+    width: 90%;
+  }
+  main {
+    grid-template-columns: 1fr;
+  }
 }
