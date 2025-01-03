@@ -2,6 +2,7 @@ import { arrOfProjects } from "./project.js";
 import { screenController } from "./DOM.js";
 import { deleteTodoFromProject } from "./todo.js";
 import deleteIconImg from "./assets/icons/trash-can-outline.svg";
+import illustrationImg from "./assets/images/Empty-amico.svg";
 
 export function tasksDueInSevenDays() {
   let contentPage = document.querySelector("#content");
@@ -61,6 +62,22 @@ export function tasksDueInSevenDays() {
   if (contentPage.textContent !== "") {
     contentPage.appendChild(bottomDiv);
   } else {
-    contentPage.textContent = "tasks due in seven days would show up here";
+    const Div = document.createElement("div");
+    Div.classList.add("tasksDueTodayDiv");
+    const container = document.createElement("div");
+
+    const illustrationEmptyImg = document.createElement("img");
+    illustrationEmptyImg.src = illustrationImg;
+    illustrationEmptyImg.width = "450";
+    const paragraphText = document.createElement("p");
+    paragraphText.textContent = "Tasks due in seven days would show up here";
+    paragraphText.style.color = "#2e073f";
+    paragraphText.style.fontSize = "18px";
+    paragraphText.style.fontStyle = "italic";
+
+    container.appendChild(illustrationEmptyImg);
+    container.appendChild(paragraphText);
+    Div.appendChild(container);
+    contentPage.appendChild(Div);
   }
 }

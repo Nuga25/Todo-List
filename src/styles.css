@@ -8,17 +8,18 @@ html,
 body {
   height: 100vh;
   width: 100vw;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  font-family: "Poppins", serif;
 }
 
 header {
   height: 60px;
-  border: 1px solid #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1084b9;
+  background-color: #2e073f;
   color: #fff;
 }
 
@@ -36,9 +37,9 @@ main {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
-  border: 1px solid #6c4e31;
-  background-color: #ffeac5;
-  color: #603f26;
+  border: 2px solid #2e073f;
+  background-color: #fff;
+  color: #2e073f;
   z-index: 1000;
 }
 
@@ -59,7 +60,7 @@ form > div {
 input[type="text"],
 input[type="date"],
 select {
-  border: 1px solid #6c4e31;
+  border: 1px solid #2e073f;
   height: 30px;
   border-radius: 10px;
   padding: 5px;
@@ -67,7 +68,7 @@ select {
 }
 
 textarea {
-  border: 1px solid #6c4e31;
+  border: 1px solid #2e073f;
   border-radius: 10px;
   padding: 5px;
   background-color: #fff;
@@ -84,7 +85,7 @@ textarea {
   height: 35px;
   cursor: pointer;
   border-radius: 10px;
-  background-color: #603f26;
+  background-color: #2e073f;
   color: #fff;
   font-size: 18px;
   padding: 5px;
@@ -92,8 +93,8 @@ textarea {
 
 #submit-task-btn:hover {
   background-color: #fff;
-  color: #603f26;
-  border: 2px solid #603f26;
+  color: #2e073f;
+  border: 2px solid #2e073f;
   transition: ease-in 0.3s;
 }
 
@@ -102,25 +103,55 @@ textarea {
 }
 
 .sidebar {
-  border: 1px solid #000;
-  padding: 10px;
+  padding: 10px 0 10px 10px;
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  background-color: #1084b9;
+  grid-template-rows: 1fr 2fr;
+  background-color: #2e073f;
   color: #fff;
+}
+
+.icons {
+  width: 20px;
+  fill: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-menus {
   padding: 5px;
   font-size: 18px;
   cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.sidebar-menus:hover {
+  background-color: #ba68c8;
+  border-radius: 40px 0 0 40px;
+  transition: 0.3s ease-in;
+}
+
+.sidebar-menus.active {
+  background-color: #ba68c8;
+  border-radius: 40px 0 0 40px;
+}
+
+small > a {
+  text-decoration: none;
+  color: #ba68c8;
+  font-size: 10px;
+  display: block;
 }
 
 .displayToAddNewProject {
-  border: 1px solid #fff;
+  border: 1px solid #ba68c8;
   padding: 5px;
   border-radius: 5px;
   margin: 5px 0;
+  margin-right: 5px;
 }
 
 .displayToAddNewProject_box2 {
@@ -135,8 +166,25 @@ textarea {
   width: 100%;
 }
 
-.addNewProjectButtons {
-  width: 8rem;
+.cancelProjectSave {
+  width: 50%;
+  background-color: rgb(197, 70, 70);
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.saveProjectButton {
+  width: 50%;
+  background-color: rgb(78, 160, 78);
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.cancelProjectSave:hover,
+.saveProjectButton:hover {
+  opacity: 0.8;
 }
 
 .projectNameContainerForeach {
@@ -144,12 +192,14 @@ textarea {
   padding: 5px;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #ba68c8;
+  margin: 5px 0;
 }
 
 .projectName {
   font-size: 18px;
   cursor: pointer;
+  width: 80%;
 }
 
 .project-icons-div {
@@ -161,15 +211,68 @@ textarea {
 
 .svg-icons-project {
   width: 18px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.svg-icons-project:hover {
+  background-color: #2e073f;
+  transition: 0.3s ease-in;
+}
+
+.addProjectButton {
+  width: 95%;
+  margin: 10px 5px;
+  height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #2e073f;
+  background-color: #ba68c8;
+  border: 1px solid #ba68c8;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.addProjectButton:hover {
+  color: #ba68c8;
+  background-color: #2e073f;
+  transition: 0.3s ease-in;
 }
 
 /* task container styling */
+.projectNameInDisplay {
+  color: #2e073f;
+  padding: 5px;
+}
+
+.addTaskBtn {
+  margin: 5px;
+  width: 8rem;
+  height: 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #2e073f;
+  font-weight: 700;
+}
+
+.addTaskBtn:hover {
+  color: #2e073f;
+  background-color: #ba68c8;
+  border: 1px solid #2e073f;
+  transition: 0.3s ease-in;
+}
+
 .taskContainerForEach {
   display: flex;
   flex-direction: column;
-  background-color: #82cdf0;
+  /* background-color: #ba68c8; */
+  border: 1.8px solid #2e073f;
+  color: #2e073f;
+  border-radius: 8px;
   padding: 10px;
-  margin: 5px;
+  margin: 10px 5px;
 }
 
 .taskContainerBox1 {
@@ -191,13 +294,28 @@ textarea {
 }
 
 .svg-icons {
-  width: 20px;
+  width: 25px;
   margin: 5px;
+  background-color: #ba68c8;
+  border: 1.5px solid #2e073f;
+  padding: 2px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.svg-icons:hover,
+.svg-icons-expand:hover {
+  background-color: #2e073f;
 }
 
 .svg-icons-expand {
   width: 25px;
   margin: 5px;
+  background-color: #ba68c8;
+  border: 1.5px solid #2e073f;
+  padding: 2px;
+  border-radius: 5px;
+  cursor: pointer;
   transition: transform 0.3s ease;
 }
 
@@ -215,9 +333,14 @@ textarea {
   width: 250px;
   height: 40px;
   margin: 10px;
-  background-color: #1084b9;
+  background-color: #2e073f;
   border-radius: 15px;
   cursor: pointer;
+}
+
+.clearCompletedTasksBox:hover {
+  background-color: #ba68c8;
+  transition: 0.3s ease-in;
 }
 
 .deleteCompletedIcon {
@@ -227,7 +350,7 @@ textarea {
 
 /* styling for completed task */
 .completed {
-  color: #808080;
+  color: #4d4545;
   position: relative;
 }
 
@@ -247,4 +370,72 @@ textarea {
   display: none;
   font-style: italic;
   margin-top: 5px;
+}
+
+/* PAGE LOAD STYLING */
+.pageLoadDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.welcomeText {
+  font-size: 3rem;
+  color: #2e073f;
+}
+
+.welcomeParagraph1 {
+  color: #2e073f;
+  font-size: 1rem;
+}
+
+.welcomeParagraph2 {
+  color: #ba68c8;
+  font-style: italic;
+}
+
+/* TASKS DUE TODAY INITIAL RENDER */
+.tasksDueTodayDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* Hide the default checkbox appearance */
+#myCheckbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 6px; /* Rounded corners */
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Add a check mark when checked */
+#myCheckbox:checked {
+  background-color: #4caf50; /* Green background when checked */
+  border-color: #4caf50; /* Green border */
+}
+
+/* Display a check mark inside the checkbox when checked */
+#myCheckbox:checked::after {
+  content: "✔"; /* Check mark symbol */
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  color: white;
+  font-size: 18px;
+}
+
+/* Add hover effect */
+#myCheckbox:hover {
+  border-color: #007b33;
+  background-color: #e0e0e0;
 }

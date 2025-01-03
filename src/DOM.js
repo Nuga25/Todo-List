@@ -24,6 +24,7 @@ function screenController() {
     arrOfProjects.forEach((proj) => {
       const projectNameContainer = document.createElement("div");
       projectNameContainer.classList.add("projectNameContainerForeach");
+      projectNameContainer.classList.add("sidebar-menus");
       const projectDiv_a = document.createElement("div");
       projectDiv_a.classList.add("projectName");
       const projectDiv_b = document.createElement("div");
@@ -47,9 +48,9 @@ function screenController() {
         const newProjectInput = document.createElement("input");
         newProjectInput.classList.add("newProjectInput");
         const addNewProjectButton = document.createElement("button");
-        addNewProjectButton.classList.add("addNewProjectButtons");
+        addNewProjectButton.classList.add("saveProjectButton");
         const cancelButton = document.createElement("button");
-        cancelButton.classList.add("addNewProjectButtons");
+        cancelButton.classList.add("cancelProjectSave");
 
         newProjectInput.value = proj.name;
         addNewProjectButton.textContent = "Save Change";
@@ -119,9 +120,9 @@ function screenController() {
     const newProjectInput = document.createElement("input");
     newProjectInput.classList.add("newProjectInput");
     const addNewProjectButton = document.createElement("button");
-    addNewProjectButton.classList.add("addNewProjectButtons");
+    addNewProjectButton.classList.add("saveProjectButton");
     const cancelButton = document.createElement("button");
-    cancelButton.classList.add("addNewProjectButtons");
+    cancelButton.classList.add("cancelProjectSave");
 
     addNewProjectButton.textContent = "Save";
     cancelButton.textContent = "Cancel";
@@ -223,14 +224,17 @@ function screenController() {
       if (taskContainer) {
         //styling for task divs based on task priority
         if (updatedPriority === "Low") {
-          taskContainer.style.borderLeft = "2px solid green";
+          taskContainer.style.borderLeft = "3px solid #008000";
         }
         if (updatedPriority === "Medium") {
-          taskContainer.style.borderLeft = "2px solid yellow";
+          taskContainer.style.borderLeft = "3px solid #ffae42";
         }
         if (updatedPriority === "High") {
-          taskContainer.style.borderLeft = "2px solid red";
+          taskContainer.style.borderLeft = "3px solid #ff0000";
         }
+
+        // Update the task's DOM attributes and content
+        taskContainer.setAttribute("data-task-title", updatedTitle);
 
         // Update the task's content
         const taskTitleElement = taskContainer.querySelector("h4");
@@ -244,7 +248,16 @@ function screenController() {
         const taskDueDateElement = taskContainer.querySelector(
           ".taskContainerBox2 p"
         );
-        taskDueDateElement.textContent = updatedDueDate;
+        const theDate = new Date(updatedDueDate);
+        if (isNaN(theDate)) {
+          dueDate.textContent = "Due date is invalid"; // Handle invalid dates
+          console.log(theDate);
+        } else {
+          const editedDate = formatDistanceToNow(theDate, {
+            addSuffix: true,
+          });
+          taskDueDateElement.textContent = `Due ${editedDate}`;
+        }
       }
     });
   };
@@ -268,6 +281,7 @@ function screenController() {
     taskDivBox1_b.classList.add("taskDivBox1_b");
 
     const checkBox = document.createElement("input");
+    checkBox.id = "myCheckbox";
     checkBox.type = "checkbox";
     checkBox.checked = task.completed; // set checkbox state based on task flag
 
@@ -352,13 +366,13 @@ function screenController() {
     //styling for task divs based on task priority
     const taskPriority = task.priority;
     if (taskPriority === "Low") {
-      taskDiv.style.borderLeft = "2px solid #008000";
+      taskDiv.style.borderLeft = "3px solid #008000";
     }
     if (taskPriority === "Medium") {
-      taskDiv.style.borderLeft = "2px solid #ffff00";
+      taskDiv.style.borderLeft = "3px solid #ffae42";
     }
     if (taskPriority === "High") {
-      taskDiv.style.borderLeft = "2px solid #ff0000";
+      taskDiv.style.borderLeft = "3px solid #ff0000";
     }
 
     taskDiv.appendChild(taskDivBox1);
@@ -373,6 +387,7 @@ function screenController() {
     contentDiv.textContent = "";
 
     const projectTitle = document.createElement("h2");
+    projectTitle.classList.add("projectNameInDisplay");
     projectTitle.textContent = project.name;
 
     const taskContainer = document.createElement("div");
@@ -402,6 +417,10 @@ function screenController() {
     deleteIcon.src = deleteIconImg;
     deleteIcon.classList.add("deleteCompletedIcon");
     bottomDiv.appendChild(deleteIcon);
+    //remove clear completed tasks button if no tasks
+    if (taskContainer.textContent === "") {
+      bottomDiv.style.display = "none";
+    }
 
     // Remove existing listeners by replacing the button with a clone
     const newClearCompletedTaskButton =

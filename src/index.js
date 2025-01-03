@@ -6,6 +6,21 @@ import { allTasksPage } from "./allTasksPage.js";
 import { tasksDueInSevenDays } from "./tasksDueInSevenDays.js";
 import { tasksDueToday } from "./tasksDueToday.js";
 
+//TO ADD CLASS OF ACTIVE TO SIDEBAR MENU
+document.addEventListener("DOMContentLoaded", () => {
+  const navButtons = document.querySelectorAll(".sidebar-menus");
+
+  navButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      // Remove active class from all buttons
+      navButtons.forEach((btn) => btn.classList.remove("active"));
+
+      // Add active class to the clicked button
+      button.classList.add("active");
+    });
+  });
+});
+
 //Display on page load
 document.addEventListener("DOMContentLoaded", () => {
   pageLoad();
