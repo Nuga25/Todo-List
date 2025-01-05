@@ -25,15 +25,36 @@ header {
 }
 
 .hamburger-menu {
-  width: 40px;
-  fill: #fff;
   cursor: pointer;
   display: none;
 }
 
-.hamburger-menu.flipped {
-  transform: rotate(45deg);
+.menu {
+  width: 30px;
+  height: 3px;
+  margin: 5px 0;
+  display: flex;
+  margin-right: 2px;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 2px;
 }
+
+.bar1.flipped {
+  transform: translateY(4px) rotate(45deg);
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+.bar3.flipped {
+  transform: translateY(-4px) rotate(135deg);
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+/* .hamburger-menu.flipped {
+  transform: rotate(45deg);
+} */
 
 main {
   flex-grow: 1;
@@ -361,12 +382,12 @@ small > a {
 }
 
 /* styling for completed task */
-.completed {
+.taskContainerBox1.completed {
   color: #4d4545;
   position: relative;
 }
 
-.completed::before {
+.taskContainerBox1.completed::before {
   content: "";
   position: absolute;
   top: 50%; /* Center the line vertically */
@@ -390,6 +411,7 @@ small > a {
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 .welcomeText {
@@ -417,40 +439,40 @@ small > a {
 }
 
 /* Hide the default checkbox appearance */
-/* #myCheckbox {
+#myCheckbox {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   width: 18px;
   height: 18px;
   border: 2px solid #ccc;
-  border-radius: 6px; 
+  border-radius: 6px;
   background-color: #f0f0f0;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-} */
+}
 
 /* Add a check mark when checked */
-/* #myCheckbox:checked {
-  background-color: #4caf50; 
+#myCheckbox:checked {
+  background-color: #4caf50;
   border-color: #4caf50;
-} */
+}
 
 /* Display a check mark inside the checkbox when checked */
-/* #myCheckbox:checked::after {
-  content: "✔"; 
+#myCheckbox:checked::after {
+  content: "✔";
   position: absolute;
   left: 3px;
   top: 3px;
   color: white;
   font-size: 18px;
-} */
+}
 
 /* Add hover effect */
-/* #myCheckbox:hover {
+#myCheckbox:hover {
   border-color: #007b33;
   background-color: #e0e0e0;
-} */
+}
 
 footer {
   background-color: #2e073f;
@@ -484,6 +506,7 @@ footer > small > a {
     width: 90%;
     bottom: 0;
     top: 0;
+    z-index: 1000;
   }
   .pageLoadImg {
     width: 90%;
