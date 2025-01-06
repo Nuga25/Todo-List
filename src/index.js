@@ -28,16 +28,25 @@ hamburgerMenu.addEventListener("click", () => {
 
 //TO ADD CLASS OF ACTIVE TO SIDEBAR MENU
 document.addEventListener("DOMContentLoaded", () => {
-  const navButtons = document.querySelectorAll(".sidebar-menus");
+  const sidebar = document.querySelector(".sidebar");
 
-  navButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      // Remove active class from all buttons
-      navButtons.forEach((btn) => btn.classList.remove("active"));
+  sidebar.addEventListener("click", (event) => {
+    if (event.target.classList.contains("sidebar-menus")) {
+      const navButtons = document.querySelectorAll(".sidebar-menus");
+      //remove active class from all buttons
+      navButtons.forEach((button) => {
+        button.classList.remove("active");
+      });
 
       // Add active class to the clicked button
-      button.classList.add("active");
-    });
+      event.target.classList.add("active");
+
+      //close the sidebar
+      sidebar.style.display = "none";
+      document.querySelector(".bar1").classList.remove("flipped");
+      document.querySelector(".bar3").classList.remove("flipped");
+      document.querySelector(".bar2").style.display = "block";
+    }
   });
 });
 

@@ -14,6 +14,7 @@ import { formatDistanceToNow } from "date-fns";
 import editIconImg from "./assets/icons/file-edit-outline.svg";
 import deleteIconImg from "./assets/icons/trash-can-outline.svg";
 import expandIconImg from "./assets/icons/chevron-down.svg";
+import addTaskImg from "./assets/images/to-do-list.svg";
 
 function screenController() {
   //function to print created projects in array to the screen
@@ -24,7 +25,7 @@ function screenController() {
     arrOfProjects.forEach((proj) => {
       const projectNameContainer = document.createElement("div");
       projectNameContainer.classList.add("projectNameContainerForeach");
-      projectNameContainer.classList.add("sidebar-menus");
+      projectNameContainer.classList.add("sidebar-menus"); //!!!!!!
       const projectDiv_a = document.createElement("div");
       projectDiv_a.classList.add("projectName");
       const projectDiv_b = document.createElement("div");
@@ -417,9 +418,18 @@ function screenController() {
     deleteIcon.src = deleteIconImg;
     deleteIcon.classList.add("deleteCompletedIcon");
     bottomDiv.appendChild(deleteIcon);
-    //remove clear completed tasks button if no tasks
+    //remove clear completed tasks button and add image if no tasks
     if (taskContainer.textContent === "") {
       bottomDiv.style.display = "none";
+
+      const imgContainer = document.createElement("div");
+      imgContainer.classList.add("tasksImgContainer");
+      const createTaskImg = document.createElement("img");
+      createTaskImg.src = addTaskImg;
+      createTaskImg.width = "450";
+
+      imgContainer.appendChild(createTaskImg);
+      taskContainer.appendChild(imgContainer);
     }
 
     // Remove existing listeners by replacing the button with a clone
@@ -439,6 +449,7 @@ function screenController() {
           taskContainer.remove(); // Remove the specific task container
         }
       });
+      openProject(project); //rerender the DOM
     });
 
     contentDiv.appendChild(projectTitle);
@@ -501,6 +512,7 @@ function screenController() {
       dialog.close();
 
       // update task container with new task
+      openProject(project);
       renderTaskUI(newTask, project.name, taskContainer);
     });
   };
