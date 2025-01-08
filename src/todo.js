@@ -1,9 +1,5 @@
-import {
-  arrOfProjects,
-  addProject,
-  editProjectName,
-  deleteProject,
-} from "./project.js";
+import { arrOfProjects } from "./project.js";
+import { saveToLocalStorage } from "./localStorage.js";
 
 //function to create todo
 function createTodoItem(title, description, dueDate, priority) {
@@ -17,12 +13,15 @@ function addTodoToProject(title, description, dueDate, priority, projectName) {
   const project = arrOfProjects.find((proj) => proj.name === projectName);
   if (project) {
     project.addTask(task);
-    console.log(project.getTasks());
+    console.log(`all tasks are: `, project.getTasks());
   } else {
     console.log("project name does not exist");
   }
 
   console.log("Task is : ", task);
+
+  saveToLocalStorage("projects", arrOfProjects);
+
   return task;
 }
 
@@ -43,6 +42,7 @@ function editTodo(
   newTodo.dueDate = newDueDate;
   newTodo.priority = newPriority;
 
+  saveToLocalStorage("projects", arrOfProjects);
   return newTodo;
 }
 
@@ -50,6 +50,7 @@ function markTodoAsComplete(title, projectName) {
   const project = arrOfProjects.find((proj) => proj.name === projectName);
   if (project) {
     project.markTaskAsComplete(title);
+    saveToLocalStorage("projects", arrOfProjects);
   } else {
     console.log("cannot mark task as complete because project not found");
   }
@@ -63,78 +64,10 @@ function deleteTodoFromProject(title, projectName) {
   } else {
     console.log("task does not exist");
   }
+
+  saveToLocalStorage("projects", arrOfProjects);
 }
 
-addProject("Default PROJECT 1");
-addTodoToProject(
-  "make dinner",
-  "rice flour for four",
-  "today",
-  "Medium",
-  "Default PROJECT 1"
-);
-addTodoToProject(
-  "make bed",
-  "before you lay down",
-  "today",
-  "High",
-  "Default PROJECT 1"
-);
-
-addProject("PROJECT 2");
-addTodoToProject(
-  "make food",
-  "rice flour for four",
-  "today",
-  "Medium",
-  "PROJECT 2"
-);
-addTodoToProject(
-  "make bed",
-  "before you lay down",
-  "today",
-  "High",
-  "PROJECT 2"
-);
-addTodoToProject(
-  "make bed",
-  "before you lay down",
-  "25-01-2025",
-  "High",
-  "PROJECT 2"
-);
-//deleteProject("PROJECT 1");
-
-//deleteTodoFromProject("make dinner", "PROJECT 2");
-
-editTodo(
-  "new title",
-  "new description",
-  "23-12-24",
-  "High",
-  "make bed",
-  "PROJECT 2"
-);
-
-editProjectName("PROJECT 2", "Default Project 2");
-
-//Log all projects and their tasks
-arrOfProjects.forEach((project) => {
-  console.log(`Project: ${project.name}`);
-  project.getTasks().forEach((task) => {
-    console.log(`- Task: ${task.title}, Due: ${task.dueDate}`);
-  });
-});
-
-markTodoAsComplete("make food", "Default Project 2");
-arrOfProjects.forEach((project) => {
-  console.log(`from project: ${project.name}`);
-  project.getCompletedTasks().forEach((task) => {
-    console.log(
-      `- Task: ${task.title} which was Due: ${task.dueDate} has been completed`
-    );
-  });
-});
 export {
   addTodoToProject,
   markTodoAsComplete,

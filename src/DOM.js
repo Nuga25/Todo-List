@@ -529,7 +529,7 @@ function screenController() {
     }
   };
 
-  return { printAvailableProject, addProjectButton, renderTaskUI };
+  return { printAvailableProject, addProjectButton, renderTaskUI, openProject };
 }
 
 export { screenController };

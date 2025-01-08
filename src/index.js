@@ -5,7 +5,11 @@ import { screenController } from "./DOM.js";
 import { allTasksPage } from "./allTasksPage.js";
 import { tasksDueInSevenDays } from "./tasksDueInSevenDays.js";
 import { tasksDueToday } from "./tasksDueToday.js";
-import { arrOfProjects } from "./project.js";
+import { arrOfProjects, createProject } from "./project.js";
+import { loadFromLocalStorage } from "./localStorage.js";
+
+const controller = screenController();
+controller.printAvailableProject(); //REMOVE THIS
 
 const hamburgerMenu = document.querySelector(".hamburger-menu");
 hamburgerMenu.addEventListener("click", () => {
@@ -47,11 +51,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Display on page load
 document.addEventListener("DOMContentLoaded", () => {
-  pageLoad();
-});
+  const savedProjects = loadFromLocalStorage("projects") || [];
+  console.log(`saved project:`, savedProjects);
 
-const controller = screenController();
-controller.printAvailableProject(); //REMOVE THIS
+  savedProjects.forEach((project) => {
+    const restoredProject = createProject(project.name);
+
+    // Add tasks to the restored project
+    project.tasks.forEach((task) => {
+      restoredProject.addTask(task);
+    });
+
+    arrOfProjects.push(restoredProject);
+  });
+
+  if (arrOfProjects.length > 0) {
+    //arrOfProjects.push(...savedProjects);
+    console.log(arrOfProjects);
+    controller.printAvailableProject();
+    arrOfProjects.forEach((project) => {
+      controller.openProject(project);
+    });
+  }
+  if (arrOfProjects.length === 0) {
+    pageLoad();
+  }
+});
 
 const addProjectButton = document.querySelector(".addProjectButton");
 addProjectButton.addEventListener("click", () => {

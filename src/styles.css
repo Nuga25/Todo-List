@@ -429,6 +429,21 @@ small > a {
 .welcomeText {
   font-size: 3rem;
   color: #2e073f;
+  display: inline-block;
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Hides the extra text */
+  padding-right: 5px; /* Adds space after the text */
+  animation: typing 4s steps(40) 1s forwards;
+}
+
+/* Keyframe for the typing effect */
+@keyframes typing {
+  from {
+    width: 0; /* Start with no visible text */
+  }
+  to {
+    width: 100%; /* Show all text */
+  }
 }
 
 .welcomeParagraph1 {
@@ -530,5 +545,12 @@ footer > small > a {
   }
   #dialog {
     width: 90%;
+  }
+  .welcomeText {
+    font-size: 2rem;
+  }
+  .welcomeParagraph1,
+  .welcomeParagraph2 {
+    padding: 5px;
   }
 }

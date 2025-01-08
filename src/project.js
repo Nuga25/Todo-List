@@ -1,3 +1,5 @@
+import { saveToLocalStorage } from "./localStorage.js";
+
 //function to create new projects
 function createProject(name) {
   const tasks = [];
@@ -50,18 +52,35 @@ let arrOfProjects = [];
 function addProject(name) {
   const project = createProject(name);
   arrOfProjects.push(project);
+  saveToLocalStorage("projects", arrOfProjects);
   return project;
 }
 
 //function to edit project name
 function editProjectName(oldName, newName) {
   const project = arrOfProjects.find((proj) => proj.name === oldName);
-  return (project.name = newName);
+  const newProject = (project.name = newName);
+  saveToLocalStorage("projects", arrOfProjects);
+  return newProject;
 }
 
 //function to delete project
 function deleteProject(name) {
+  let projects = JSON.parse(localStorage.getItem("projects"));
+
+  // Find and remove the project by name
+  const nameToRemove = name;
+  projects = projects.filter((project) => project.name !== nameToRemove);
+
+  // Save the updated array back to localStorage
+  localStorage.setItem("projects", JSON.stringify(projects));
   return (arrOfProjects = arrOfProjects.filter((proj) => proj.name !== name));
 }
 
-export { arrOfProjects, addProject, editProjectName, deleteProject };
+export {
+  createProject,
+  arrOfProjects,
+  addProject,
+  editProjectName,
+  deleteProject,
+};
