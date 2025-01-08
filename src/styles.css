@@ -528,6 +528,9 @@ footer > small > a {
   header {
     justify-content: space-between;
   }
+  #content {
+    padding: 5px;
+  }
   .hamburger-menu {
     display: block;
   }

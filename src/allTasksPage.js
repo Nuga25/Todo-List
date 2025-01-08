@@ -56,6 +56,7 @@ export function allTasksPage() {
 
     const illustrationEmptyImg = document.createElement("img");
     illustrationEmptyImg.src = illustrationImg;
+    illustrationEmptyImg.classList.add("emptyPageImg");
     illustrationEmptyImg.width = "450";
     const paragraphText = document.createElement("p");
     paragraphText.textContent =
