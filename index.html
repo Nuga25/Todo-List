@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlanIt</title>
+
+    <!-- google fonts link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- favicon -->
+    <link rel="icon" href="55ce016757153c14509d.png" type="image/png">
+  <script defer src="main.js"></script></head>
+  <body>
+    <header>
+      <h1>PlanIt</h1>
+       <div class="hamburger-menu">
+        <span class="menu bar1"></span>
+        <span class="menu bar2"></span>
+        <span class="menu bar3"></span>
+       </div>
+    </header>
+    <main>
+      <section class="sidebar">
+        <div class="sidebar-box1">
+          <h2>OVERVIEW</h2>
+          <ul>
+            <li>
+              <div class="sidebar-menus" id="allTasksBtn">
+                <span>
+                  <svg class="icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>folder-multiple-outline</title><path d="M22,4A2,2 0 0,1 24,6V16A2,2 0 0,1 22,18H6A2,2 0 0,1 4,16V4A2,2 0 0,1 6,2H12L14,4H22M2,6V20H20V22H2A2,2 0 0,1 0,20V11H0V6H2M6,6V16H22V6H6Z" /></svg>
+                </span>
+                <span>All Tasks</span>
+              </div>
+            </li>
+            <li>
+              <div class="sidebar-menus" id="dueTodayBtn">
+                <span>
+                  <svg class="icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>calendar-alert</title><path d="M6 1V3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.9 20.11 3 19 3H18V1H16V3H8V1H6M5 8H19V19H5V8M11 9V14H13V9H11M11 16V18H13V16H11Z" /></svg>
+                </span>
+                <span>Due Today</span>
+              </div>
+            </li>
+            <li>
+              <div class="sidebar-menus" id="nextSevenDaysBtn">
+                <span>
+                  <svg class="icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>numeric-7-box-outline</title><path d="M11,17L15,9V7H9V9H13L9,17M19,19H5V5H19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>
+                </span>
+                <span>Next 7 Days</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar-box2">
+          <h2>PROJECTS</h2>
+          <div id="projectDiv"></div>
+          <button class="addProjectButton">Add New Project</button>
+        </div>
+        <div class="sidebar-footer">
+          <small> 
+            <a href="https://storyset.com/people">People illustrations by Storyset</a>
+          </small>
+          <small>
+            <a href="https://www.flaticon.com/free-icons/to-do-list" title="to do list icons">To do list favicon created by inipagistudio - Flaticon</a>
+          </small>
+        </div>
+      </section>
+      <section id="content"></section>
+     
+      <dialog id="dialog">
+        <span class="close-dialog">&#10005</span>
+        <form method="dialog" id="form">
+          <div>
+            <label for="task-title">Title</label>
+            <input type="text" id="task-title" autofocus required placeholder="What do you have to do?"/>
+          </div>
+          <div>
+            <label for="task-due-date">Due Date</label>
+            <input type="date" id="task-due-date" value=""/>
+          </div>
+          <div>
+            <label for="task-priority">Priority</label>
+            <select name="priority" id="task-priority">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div>
+            <label for="task-description">Description(optional)</label>
+            <textarea name="taskDescription" id="task-description"  cols="30" rows="6" placeholder="Describe the task"></textarea>
+          </div>
+          <div class="submit-btn-container">
+            <button type="submit" id="submit-task-btn">Add Task</button>
+          </div>
+        </form>
+      </dialog>
+    </main>
+    <footer>
+      <small>
+        <a href="https://x.com/ifeeee___">Designed and Coded by ifeeee___. Copyright &copy; 2025</a>
+      </small>
+    </footer>
+  </body>
+</html>
