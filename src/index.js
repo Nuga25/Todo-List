@@ -5,6 +5,7 @@ import { screenController } from "./DOM.js";
 import { allTasksPage } from "./allTasksPage.js";
 import { tasksDueInSevenDays } from "./tasksDueInSevenDays.js";
 import { tasksDueToday } from "./tasksDueToday.js";
+import { arrOfProjects } from "./project.js";
 
 const hamburgerMenu = document.querySelector(".hamburger-menu");
 hamburgerMenu.addEventListener("click", () => {
@@ -29,10 +30,10 @@ hamburgerMenu.addEventListener("click", () => {
 //TO ADD CLASS OF ACTIVE TO SIDEBAR MENU
 document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.querySelector(".sidebar");
+  const navButtons = document.querySelectorAll(".sidebar-menus");
 
   sidebar.addEventListener("click", (event) => {
     if (event.target.classList.contains("sidebar-menus")) {
-      const navButtons = document.querySelectorAll(".sidebar-menus");
       //remove active class from all buttons
       navButtons.forEach((button) => {
         button.classList.remove("active");
@@ -40,12 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Add active class to the clicked button
       event.target.classList.add("active");
-
-      //close the sidebar
-      sidebar.style.display = "none";
-      document.querySelector(".bar1").classList.remove("flipped");
-      document.querySelector(".bar3").classList.remove("flipped");
-      document.querySelector(".bar2").style.display = "block";
     }
   });
 });
