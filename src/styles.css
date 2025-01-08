@@ -143,6 +143,10 @@ textarea {
   color: #fff;
 }
 
+ul > li {
+  list-style: none;
+}
+
 .icons {
   width: 20px;
   fill: #fff;
