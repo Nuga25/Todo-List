@@ -419,6 +419,7 @@ small > a {
   display: none;
   font-style: italic;
   margin-top: 5px;
+  word-break: break-all;
 }
 
 /* PAGE LOAD STYLING */
